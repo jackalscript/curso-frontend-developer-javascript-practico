@@ -4,14 +4,14 @@ const cartIcon = document.querySelector('.navbar-shopping-cart');
 
 const desktopMenu = document.querySelector('.desktop-menu');
 const mobileMenu = document.querySelector('.mobile-menu');
-const asideMenu = document.querySelector('.product-detail');
+const shoppingCartContainer = document.querySelector('#shopping-cart-container');
 
 const cardsContainer = document.querySelector('.cards-container');
 
 
-userIcon.addEventListener('click', () => toggleMenus(desktopMenu, mobileMenu, asideMenu));
-burgerIcon.addEventListener('click', () => toggleMenus(mobileMenu, desktopMenu, asideMenu));
-cartIcon.addEventListener('click', () => toggleMenus(asideMenu, desktopMenu, mobileMenu));
+userIcon.addEventListener('click', () => toggleMenus(desktopMenu, mobileMenu, shoppingCartContainer));
+burgerIcon.addEventListener('click', () => toggleMenus(mobileMenu, desktopMenu, shoppingCartContainer));
+cartIcon.addEventListener('click', () => toggleMenus(shoppingCartContainer, desktopMenu, mobileMenu));
 
 
 function toggleMenus(menuA, menuB, menuC) {
