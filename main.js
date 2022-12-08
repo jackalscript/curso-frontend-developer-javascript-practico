@@ -1,3 +1,4 @@
+//query selectors
 const userIcon = document.querySelector('.navbar-email');
 const burgerIcon = document.querySelector('.menu');
 const cartIcon = document.querySelector('.navbar-shopping-cart');
@@ -10,15 +11,23 @@ const productDetailBar = document.querySelector('#product-detail');
 
 const cardsContainer = document.querySelector('.cards-container');
 
+//event listeners
+userIcon.addEventListener('click', () => toggleMenu(
+  desktopMenu, mobileMenu, shoppingCartContainer, productDetailBar
+));
 
-userIcon.addEventListener('click', () => toggleMenus(desktopMenu, mobileMenu, shoppingCartContainer, productDetailBar));
-burgerIcon.addEventListener('click', () => toggleMenus(mobileMenu, desktopMenu, shoppingCartContainer, productDetailBar));
-cartIcon.addEventListener('click', () => toggleMenus(shoppingCartContainer, desktopMenu, mobileMenu, productDetailBar));
+burgerIcon.addEventListener('click', () => toggleMenu(
+  mobileMenu, desktopMenu, shoppingCartContainer, productDetailBar
+));
+
+cartIcon.addEventListener('click', () => toggleMenu(
+  shoppingCartContainer, desktopMenu, mobileMenu, productDetailBar
+));
+
 productDetailCloseIcon.addEventListener('click', () => closeElement(productDetailBar));
 
-
-
-function toggleMenus(menuA, menuB, menuC, menuD) {
+//functions
+function closeBeforeOpen(menuB, menuC, menuD) {
   const isMenuBOpen = !menuB.classList.contains('inactive');
   const isMenuCOpen = !menuC.classList.contains('inactive');
   const isMenuDOpen = !menuD.classList.contains('inactive');
@@ -28,33 +37,29 @@ function toggleMenus(menuA, menuB, menuC, menuD) {
     menuC.classList.add('inactive')
     menuD.classList.add('inactive')
   }
-
-  menuA.classList.toggle('inactive');
-}
-
-function openElement(element) {
-  if (
-    !desktopMenu.classList.contains('inactive') ||
-    !mobileMenu.classList.contains('inactive') ||
-    !shoppingCartContainer.classList.contains('inactive')
-  ) {
-    desktopMenu.classList.add('inactive')
-    mobileMenu.classList.add('inactive')
-    shoppingCartContainer.classList.add('inactive')
-  }
-  element.classList.remove('inactive')
 }
 
 function closeElement(element) {
   element.classList.add('inactive');
 }
 
+function toggleMenu(menuA, menuB, menuC, menuD) {
+  closeBeforeOpen(menuB, menuC, menuD);
+  menuA.classList.toggle('inactive');
+}
+
+function openMenu(menuA, menuB, menuC, menuD) {
+  closeBeforeOpen(menuB, menuC, menuD);
+  menuA.classList.remove('inactive');
+}
 
 function renderProducts(arr) {
   for (product of arr) {
   const productCard = document.createElement('div');
   productCard.classList.add('product-card');
-  productCard.addEventListener('click', () => openElement(productDetailBar));
+  productCard.addEventListener('click', () => openMenu(
+    productDetailBar, desktopMenu, mobileMenu, shoppingCartContainer
+  ));
 
   const productImg = document.createElement('img');
   productImg.setAttribute('src', product.image);
@@ -84,7 +89,7 @@ function renderProducts(arr) {
   }
 }
 
-
+//array
 const productList = [];
 productList.push({
   name: 'Bike',
@@ -110,7 +115,5 @@ productList.push({
   image: 'https://cdn.thewirecutter.com/wp-content/media/2022/07/laptop-under-500-2048px-acer-1.jpg',
 });
 
-
-
+//function calling
 renderProducts(productList);
-
