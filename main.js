@@ -12,15 +12,15 @@ const productDetailBar = document.querySelector('#product-detail');
 const cardsContainer = document.querySelector('.cards-container');
 
 //event listeners
-userIcon.addEventListener('click', () => toggleMenu(
+userIcon.addEventListener('click', () => toggleElement(
   desktopMenu, mobileMenu, shoppingCartContainer, productDetailBar
 ));
 
-burgerIcon.addEventListener('click', () => toggleMenu(
+burgerIcon.addEventListener('click', () => toggleElement(
   mobileMenu, desktopMenu, shoppingCartContainer, productDetailBar
 ));
 
-cartIcon.addEventListener('click', () => toggleMenu(
+cartIcon.addEventListener('click', () => toggleElement(
   shoppingCartContainer, desktopMenu, mobileMenu, productDetailBar
 ));
 
@@ -33,31 +33,31 @@ function closeBeforeOpen(menuB, menuC, menuD) {
   const isMenuDOpen = !menuD.classList.contains('inactive');
 
   if (isMenuBOpen || isMenuCOpen || isMenuDOpen) {
-    menuB.classList.add('inactive')
-    menuC.classList.add('inactive')
-    menuD.classList.add('inactive')
+    menuB.classList.add('inactive');
+    menuC.classList.add('inactive');
+    menuD.classList.add('inactive');
   }
+}
+
+function toggleElement(menuA, menuB, menuC, menuD) {
+  closeBeforeOpen(menuB, menuC, menuD);
+  menuA.classList.toggle('inactive');
+}
+
+function openElement(menuA, menuB, menuC, menuD) {
+  closeBeforeOpen(menuB, menuC, menuD);
+  menuA.classList.remove('inactive');
 }
 
 function closeElement(element) {
   element.classList.add('inactive');
 }
 
-function toggleMenu(menuA, menuB, menuC, menuD) {
-  closeBeforeOpen(menuB, menuC, menuD);
-  menuA.classList.toggle('inactive');
-}
-
-function openMenu(menuA, menuB, menuC, menuD) {
-  closeBeforeOpen(menuB, menuC, menuD);
-  menuA.classList.remove('inactive');
-}
-
 function renderProducts(arr) {
   for (product of arr) {
   const productCard = document.createElement('div');
   productCard.classList.add('product-card');
-  productCard.addEventListener('click', () => openMenu(
+  productCard.addEventListener('click', () => openElement(
     productDetailBar, desktopMenu, mobileMenu, shoppingCartContainer
   ));
 
